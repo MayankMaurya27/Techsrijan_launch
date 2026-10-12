@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #050101;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* Custom Typography Classes */
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-cinzel-dec {
+  font-family: 'Cinzel Decorative', serif;
+}
+
+.font-script {
+  font-family: 'Great Vibes', cursive;
+}
+
+.font-dancing {
+  font-family: 'Dancing Script', cursive;
+}
+
+/* Metallic Beveled Gold Text */
+.gold-gradient-text {
+  background: linear-gradient(180deg, #ffffff 0%, #ffe8b5 30%, #f3c262 70%, #d4952c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+/* Fiery Crimson Glow */
+.crimson-glow {
+  text-shadow: 
+    0 0 10px rgba(239, 68, 68, 0.8),
+    0 0 25px rgba(220, 38, 38, 0.6),
+    0 0 50px rgba(185, 28, 28, 0.4);
+}
+
+.gold-glow {
+  text-shadow: 
+    0 0 8px rgba(253, 224, 71, 0.7),
+    0 0 20px rgba(234, 179, 8, 0.4);
+}
+
+/* =========================================================
+   ANIMATED FLOWING NEON BORDER BEAM FOR LAUNCH BUTTON
+   (Thicker & More Prominent as requested by user)
+   ========================================================= */
+@keyframes neonFlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.flowing-neon-btn {
+  position: relative;
+  display: inline-flex;
+  padding: 2.5px; /* Thicker, distinctly visible neon border */
+  border-radius: 9px;
+  overflow: hidden;
+  background: transparent;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 0 20px rgba(249, 115, 22, 0.6),
+    0 0 45px rgba(220, 38, 38, 0.35);
+}
+
+.flowing-neon-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 
+    0 0 30px rgba(249, 115, 22, 0.85),
+    0 0 65px rgba(239, 68, 68, 0.55),
+    inset 0 0 16px rgba(245, 158, 11, 0.35);
+}
+
+.flowing-neon-beam {
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 400%;
+  height: 400%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 45deg,
+    rgba(239, 68, 68, 0.5) 60deg,
+    #ea580c 72deg,
+    #f97316 84deg,
+    #fbbf24 94deg,
+    #ffffff 100deg,
+    transparent 105deg
+  );
+  animation: neonFlow 3s linear infinite;
+  filter: drop-shadow(0 0 8px #f97316);
+  pointer-events: none;
+}
+
+.flowing-neon-btn:hover .flowing-neon-beam {
+  animation-duration: 1.8s;
+}
+
+.flowing-neon-content {
+  position: relative;
+  z-index: 10;
+  background: rgba(12, 4, 4, 0.94);
+  border-radius: 6.5px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.3s ease;
+}
+
+.flowing-neon-btn:hover .flowing-neon-content {
+  background: rgba(18, 5, 5, 0.96);
+}
+
+/* Custom Scrollbar for Medallions Container and Modals */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(234, 88, 12, 0.5);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 115, 22, 0.8);
+}
