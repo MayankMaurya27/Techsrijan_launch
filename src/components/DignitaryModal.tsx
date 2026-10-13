@@ -1,5 +1,6 @@
 import React from 'react';
-import { X, Award, Building, Sparkles } from 'lucide-react';
+import { X, Award, Building } from 'lucide-react';
+
 import { Dignitary } from '../data/dignitaries';
 import { soundEngine } from '../utils/soundFX';
 
@@ -50,9 +51,9 @@ export const DignitaryModal: React.FC<DignitaryModalProps> = ({ dignitary, onClo
           </div>
 
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-[11px] font-semibold text-gold-300 uppercase tracking-wider mb-2">
-            <Sparkles className="w-3 h-3 text-gold-400" />
             {dignitary.badge || 'Distinguished Faculty'}
           </div>
+
 
           <h3 className="text-xl font-cinzel font-bold text-white tracking-wide">
             {dignitary.name}
