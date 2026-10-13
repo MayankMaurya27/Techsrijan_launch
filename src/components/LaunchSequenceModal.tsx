@@ -400,10 +400,11 @@ export const LaunchSequenceModal: React.FC<LaunchSequenceModalProps> = ({ isOpen
               <div className="w-8 sm:w-16 h-[1.5px] bg-gradient-to-l from-transparent to-red-500" />
             </div>
 
-            {/* Creative Cinematic Lore Passage - High contrast container */}
+            {/* Authentic Event Description - High contrast container */}
             <p className="font-sans text-xs sm:text-sm md:text-base text-zinc-100 max-w-xl leading-relaxed mb-6 italic drop-shadow-[0_2px_8px_rgba(0,0,0,1)] px-4 py-2.5 rounded-xl bg-black/50 backdrop-blur-md border border-white/10">
-              "The sacred gateway has awakened. From the cradle of innovation at Madan Mohan Malaviya University of Technology, Gorakhpur, North India's grandest techno-management odyssey begins. Break boundaries, seize glory, and write history."
+              "Welcome to TechSRIJAN'27 — the annual techno-management festival of Madan Mohan Malaviya University of Technology, Gorakhpur. Celebrate innovation, engineering excellence, and the spirit of competition."
             </p>
+
 
             {/* Key Highlights Pill Grid - Frosted obsidian cards with high legibility */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 w-full max-w-xl mb-6">
