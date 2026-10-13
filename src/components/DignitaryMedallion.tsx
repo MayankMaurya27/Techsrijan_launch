@@ -12,15 +12,15 @@ export const DignitaryMedallion: React.FC<DignitaryMedallionProps> = ({ dignitar
     <div
       onClick={() => onSelect(dignitary)}
       className={`flex flex-col items-center group cursor-pointer text-center select-none transition-all duration-300 hover:-translate-y-1.5 w-full ${
-        isVC ? '-translate-y-1 z-10 scale-105' : ''
+        isVC ? '-translate-y-2 z-10 scale-105' : '-translate-y-0.5'
       }`}
     >
-      {/* Medallion Frame Container */}
+      {/* Medallion Frame Container - slightly enlarged for superior visibility */}
       <div
         className={`relative mb-1 transition-transform duration-300 group-hover:scale-105 ${
           isVC
-            ? 'w-[72px] h-[72px] sm:w-[82px] sm:h-[82px] md:w-[92px] md:h-[92px] lg:w-[102px] lg:h-[102px] xl:w-[110px] xl:h-[110px]'
-            : 'w-[56px] h-[56px] sm:w-[66px] sm:h-[66px] md:w-[74px] md:h-[74px] lg:w-[82px] lg:h-[82px] xl:w-[88px] xl:h-[88px]'
+            ? 'w-[78px] h-[78px] sm:w-[88px] sm:h-[88px] md:w-[98px] md:h-[98px] lg:w-[106px] lg:h-[106px] xl:w-[114px] xl:h-[114px]'
+            : 'w-[62px] h-[62px] sm:w-[70px] sm:h-[70px] md:w-[78px] md:h-[78px] lg:w-[86px] lg:h-[86px] xl:w-[92px] xl:h-[92px]'
         }`}
       >
         {/* Top Ornate Finial & Glowing Ruby Gem Accent */}
@@ -113,6 +113,13 @@ export const DignitaryMedallion: React.FC<DignitaryMedallionProps> = ({ dignitar
         {/* Ambient Pulsing Gem Sparkle */}
         <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-gold-400 opacity-0 group-hover:opacity-100 transition-opacity blur-[0.5px]" />
       </div>
+
+      {/* Red Badge for CHIEF GUEST / CHIEF PATRON (Exact match to reference image) */}
+      {dignitary.badge && (
+        <span className="text-red-500 font-black uppercase text-[7.5px] sm:text-[8px] md:text-[8.5px] lg:text-[9.5px] tracking-wider mb-0.5 leading-tight drop-shadow-[0_0_8px_rgba(239,68,68,0.9)]">
+          {dignitary.badge}
+        </span>
+      )}
 
       {/* Dignitary Name (NO truncation - full name always displayed) */}
       <h4

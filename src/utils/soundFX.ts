@@ -141,6 +141,97 @@ class CinematicAudioEngine {
     osc.start(now);
     osc.stop(now + 0.07);
   }
+
+  // Visual Countdown Tick Sound (Heartbeat sub + resonant harmonic chime)
+  public playCountdownTick(count: number) {
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+
+    // Sub-bass thud (higher pitch on 1)
+    const subOsc = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    const startFreq = count === 1 ? 160 : count === 2 ? 130 : 100;
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(startFreq, now);
+    subOsc.frequency.exponentialRampToValueAtTime(35, now + 0.4);
+
+    subGain.gain.setValueAtTime(0.35, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+
+    subOsc.connect(subGain);
+    subGain.connect(this.ctx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 0.55);
+
+    // High tech energy ping
+    const pingOsc = this.ctx.createOscillator();
+    const pingGain = this.ctx.createGain();
+    const pingFreq = count === 1 ? 1760 : count === 2 ? 1318 : 880;
+    pingOsc.type = 'triangle';
+    pingOsc.frequency.setValueAtTime(pingFreq, now);
+    pingOsc.frequency.exponentialRampToValueAtTime(pingFreq * 1.5, now + 0.1);
+
+    pingGain.gain.setValueAtTime(0.15, now);
+    pingGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+    pingOsc.connect(pingGain);
+    pingGain.connect(this.ctx.destination);
+    pingOsc.start(now);
+    pingOsc.stop(now + 0.65);
+  }
+
+  // Warp / Portal Ignition Blast
+  public playWarpExplosion() {
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+
+    // Sub detonation
+    const subOsc = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(220, now);
+    subOsc.frequency.exponentialRampToValueAtTime(28, now + 1.8);
+
+    subGain.gain.setValueAtTime(0.6, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+
+    subOsc.connect(subGain);
+    subGain.connect(this.ctx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 2.6);
+
+    // Filtered noise rush (whoosh / blast)
+    const bufferSize = this.ctx.sampleRate * 1.2;
+    const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 - 1;
+    }
+
+    const whiteNoise = this.ctx.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(200, now);
+    filter.frequency.exponentialRampToValueAtTime(3200, now + 0.3);
+    filter.frequency.exponentialRampToValueAtTime(200, now + 1.2);
+
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.01, now);
+    noiseGain.gain.linearRampToValueAtTime(0.3, now + 0.2);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+    whiteNoise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(this.ctx.destination);
+    whiteNoise.start(now);
+    whiteNoise.stop(now + 1.3);
+  }
 }
 
 export const soundEngine = new CinematicAudioEngine();

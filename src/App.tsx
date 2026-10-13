@@ -3,7 +3,7 @@ import { Volume2, VolumeX, Info } from 'lucide-react';
 import { EmberCanvas } from './components/EmberCanvas';
 import { DignitaryMedallion } from './components/DignitaryMedallion';
 import { DignitaryModal } from './components/DignitaryModal';
-import { CountdownModal } from './components/CountdownModal';
+import { LaunchSequenceModal } from './components/LaunchSequenceModal';
 import { AboutDrawer } from './components/AboutDrawer';
 import { DIGNITARIES, Dignitary } from './data/dignitaries';
 import { soundEngine } from './utils/soundFX';
@@ -182,7 +182,7 @@ export const App: React.FC = () => {
 
         {/* "LAUNCH EVENT" */}
         <div className="relative my-0">
-          <h2 className="font-cinzel text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-bold tracking-[0.14em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+          <h2 className="font-cinzel text-xl sm:text-3xl md:text-4xl lg:text-[46px] font-bold tracking-[0.14em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
             <span className="gold-gradient-text drop-shadow-[0_0_25px_rgba(243,194,98,0.45)]">
               LAUNCH EVENT
             </span>
@@ -200,19 +200,19 @@ export const App: React.FC = () => {
 
         {/* "for" flourish */}
         <div className="my-0">
-          <span className="font-script text-base sm:text-xl md:text-2xl text-amber-200/90 italic drop-shadow-[0_0_6px_rgba(245,158,11,0.5)]">
+          <span className="font-script text-sm sm:text-lg md:text-xl text-amber-200/90 italic drop-shadow-[0_0_6px_rgba(245,158,11,0.5)]">
             for
           </span>
         </div>
 
-        {/* "TECHSRIJAN'27" - Monotonous, Solid, Uniform Typography (Diamond removed from T) */}
-        <div className="relative group my-0.5 cursor-pointer" onClick={handleLaunchClick}>
+        {/* "TECHSRIJAN'27" - Monotonous, Solid, Uniform Typography */}
+        <div className="relative group my-0 cursor-pointer" onClick={handleLaunchClick}>
           {/* Crimson & Ember Backglow Aura */}
           <div className="absolute inset-0 -inset-x-8 bg-red-600/30 blur-3xl rounded-full pointer-events-none group-hover:bg-red-600/50 transition-all duration-500" />
 
           {/* Monotonous, crisp, solid metallic white title */}
           <h1
-            className="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-[84px] xl:text-[98px] font-black tracking-[0.02em] text-white group-hover:scale-[1.01] transition-transform duration-300 select-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
+            className="font-cinzel text-3xl sm:text-5xl md:text-6xl lg:text-[72px] xl:text-[80px] font-black tracking-[0.02em] text-white group-hover:scale-[1.01] transition-transform duration-300 select-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
             style={{
               textShadow: '0 0 20px rgba(220, 38, 38, 0.8), 0 0 45px rgba(185, 28, 28, 0.5)',
             }}
@@ -221,8 +221,8 @@ export const App: React.FC = () => {
           </h1>
         </div>
 
-        {/* CTA Launch Button & Awakening Subtitle */}
-        <div className="mt-1 sm:mt-2 flex flex-col items-center gap-1">
+        {/* CTA Launch Button & Awakening Subtitle - positioned slightly lower below title */}
+        <div className="mt-2.5 sm:mt-3.5 md:mt-4 flex flex-col items-center gap-1.5 sm:gap-2">
           {/* Animated Flowing THICK Neon Glow Border Button */}
           <button
             onClick={handleLaunchClick}
@@ -233,7 +233,7 @@ export const App: React.FC = () => {
             <div className="flowing-neon-beam" />
 
             {/* Button Inner Body with Smoky Glass Backing */}
-            <div className="flowing-neon-content px-7 sm:px-11 py-2 sm:py-2.5 flex items-center gap-2.5 sm:gap-3.5">
+            <div className="flowing-neon-content px-7 sm:px-10 py-1.5 sm:py-2 flex items-center gap-2.5 sm:gap-3.5">
               {/* Subtle corner micro-accents */}
               <div className="absolute top-1 left-1 w-1.5 h-1.5 border-t border-l border-amber-300/80 pointer-events-none" />
               <div className="absolute bottom-1 right-1 w-1.5 h-1.5 border-b border-r border-amber-300/80 pointer-events-none" />
@@ -251,21 +251,45 @@ export const App: React.FC = () => {
             </div>
           </button>
 
-          {/* Subtitle: "THE AWAKENING BEGINS" */}
-          <p className="font-cinzel text-[9px] sm:text-[10px] md:text-xs tracking-[0.35em] sm:tracking-[0.45em] text-orange-200/95 uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-            THE AWAKENING BEGINS
-          </p>
+          {/* Subtitle: "THE AWAKENING BEGINS" - Bold Solid Black with High Visibility Contrast */}
+          <div className="relative mt-1 sm:mt-1.5 flex items-center justify-center gap-3 sm:gap-4.5 select-none">
+            {/* Left Decorative Wing Ornament */}
+            <div className="flex items-center gap-1.5 opacity-85 pointer-events-none">
+              <div className="w-8 sm:w-14 md:w-20 h-[1.5px] bg-gradient-to-r from-transparent via-black/80 to-black" />
+              <span className="text-[7px] sm:text-[9px] text-black font-bold">◆</span>
+            </div>
+
+            {/* High-Visibility Black Floating Typography */}
+            <p
+              className="font-cinzel text-xs sm:text-sm md:text-[14px] lg:text-[15px] font-black tracking-[0.38em] sm:tracking-[0.48em] uppercase text-black"
+              style={{
+                color: '#000000',
+                textShadow:
+                  '0 0 16px rgba(255, 255, 255, 0.75), 0 0 5px rgba(255, 240, 210, 0.95), 0 1px 2px rgba(255, 255, 255, 0.9)',
+                filter: 'drop-shadow(0 0 8px rgba(255, 200, 80, 0.5))',
+              }}
+            >
+              THE AWAKENING BEGINS
+            </p>
+
+            {/* Right Decorative Wing Ornament */}
+            <div className="flex items-center gap-1.5 opacity-85 pointer-events-none">
+              <span className="text-[7px] sm:text-[9px] text-black font-bold">◆</span>
+              <div className="w-8 sm:w-14 md:w-20 h-[1.5px] bg-gradient-to-l from-transparent via-black/80 to-black" />
+            </div>
+          </div>
         </div>
 
         {/* Generous Open Clearance: Keeps the Central Character on the Rock Peak 100% Visible */}
-        <div className="w-full flex-1 min-h-[50px] sm:min-h-[80px] md:min-h-[110px] pointer-events-none" />
+        <div className="w-full flex-1 min-h-[35px] sm:min-h-[50px] md:min-h-[65px] pointer-events-none" />
       </main>
 
       {/* =========================================================================
           BOTTOM SECTION: Exactly 11 Dignitaries & Faculty in Golden Medallions
-          Grid 11 Columns — All 11 Visible, VC Card Centered & Larger, Full Names
+          Grid 11 Columns — items-start ensures all 10 non-VC medallions are in ONE
+          exact horizontal straight line, lifted slightly from bottom for ample clearance
           ========================================================================= */}
-      <footer className="relative z-20 w-full pt-1 pb-3 px-2 sm:px-4 shrink-0">
+      <footer className="relative z-20 w-full pt-1 pb-4 sm:pb-6 px-2 sm:px-4 shrink-0">
         {/* Decorative Top Separator */}
         <div className="max-w-5xl mx-auto mb-1 flex items-center justify-center gap-2 opacity-40">
           <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-red-500/40 to-gold-400/60" />
@@ -273,8 +297,8 @@ export const App: React.FC = () => {
           <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-red-500/40 to-gold-400/60" />
         </div>
 
-        {/* 11 Dignitaries Grid: All 11 items guaranteed visible in one row */}
-        <div className="w-full max-w-[1720px] mx-auto grid grid-cols-11 gap-0.5 sm:gap-1 md:gap-1.5 lg:gap-2 items-end">
+        {/* 11 Dignitaries Grid: Top-aligned so all circles are locked in one straight line */}
+        <div className="w-full max-w-[1720px] mx-auto grid grid-cols-11 gap-0.5 sm:gap-1 md:gap-1.5 lg:gap-2 items-start">
           {DIGNITARIES.map((dignitary, index) => (
             <DignitaryMedallion
               key={dignitary.id}
@@ -295,11 +319,10 @@ export const App: React.FC = () => {
         onClose={() => setSelectedDignitary(null)}
       />
 
-      {/* 2. Official Launch Countdown Modal */}
-      <CountdownModal
+      {/* 2. Official 3-Second Visual Countdown & Video Launch Sequence */}
+      <LaunchSequenceModal
         isOpen={isCountdownOpen}
         onClose={() => setIsCountdownOpen(false)}
-        onOpenAbout={() => setIsAboutOpen(true)}
       />
 
       {/* 3. About TechSRIJAN'27 Drawer */}
