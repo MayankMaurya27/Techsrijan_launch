@@ -11,7 +11,6 @@ interface LaunchSequenceModalProps {
 export const LaunchSequenceModal: React.FC<LaunchSequenceModalProps> = ({ isOpen, onClose }) => {
   const [phase, setPhase] = useState<'countdown' | 'video' | 'launched'>('countdown');
   const [count, setCount] = useState<number>(3);
-  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const hasTriggeredEndRef = useRef<boolean>(false);
@@ -56,14 +55,12 @@ export const LaunchSequenceModal: React.FC<LaunchSequenceModalProps> = ({ isOpen
     if (!isOpen) {
       setPhase('countdown');
       setCount(3);
-      setIsRedirecting(false);
       hasTriggeredEndRef.current = false;
       return;
     }
 
     setPhase('countdown');
     setCount(3);
-    setIsRedirecting(false);
     hasTriggeredEndRef.current = false;
     soundEngine.playCountdownTick(3);
 
@@ -92,7 +89,7 @@ export const LaunchSequenceModal: React.FC<LaunchSequenceModalProps> = ({ isOpen
 
   // Handle video autoplay with default audio and universal browser fallback
   useEffect(() => {
-    let safetyRedirectTimer: NodeJS.Timeout | null = null;
+    let safetyTimer: NodeJS.Timeout | null = null;
 
     if (phase === 'video') {
       const video = videoRef.current;
@@ -112,23 +109,22 @@ export const LaunchSequenceModal: React.FC<LaunchSequenceModalProps> = ({ isOpen
         }
       }
 
-      // Hard safety timer: Video is 9.6s, so at 9.9s we ensure redirection always fires
-      // even if on a low-end device the decoder lags or timeupdate skips
-      safetyRedirectTimer = setTimeout(() => {
+      // Hard safety timer: Video is 11.60s, so at 11.8s we ensure handleVideoEnd triggers
+      safetyTimer = setTimeout(() => {
         handleVideoEnd();
-      }, 9900);
+      }, 11800);
     }
 
     return () => {
-      if (safetyRedirectTimer) clearTimeout(safetyRedirectTimer);
+      if (safetyTimer) clearTimeout(safetyTimer);
     };
   }, [phase]);
 
-  // Cut before the last milliseconds and immediately redirect to techsrijan.org
+  // Cut before the last 30-50 milliseconds and transition to celebration + open new tab
   const handleVideoTimeUpdate = () => {
     if (videoRef.current && videoRef.current.duration) {
       const remainingTime = videoRef.current.duration - videoRef.current.currentTime;
-      if (remainingTime <= 0.08) {
+      if (remainingTime <= 0.05) {
         handleVideoEnd();
       }
     }
@@ -137,18 +133,20 @@ export const LaunchSequenceModal: React.FC<LaunchSequenceModalProps> = ({ isOpen
   const handleVideoEnd = () => {
     if (hasTriggeredEndRef.current) return;
     hasTriggeredEndRef.current = true;
-    setIsRedirecting(true);
 
-    // Trigger warp explosion SFX
-    soundEngine.playWarpExplosion();
-
-    // Universal automatic redirection to techsrijan.org for all browsers & devices
+    // Open techsrijan.org in a NEW tab
     try {
-      window.location.assign('https://techsrijan.org');
-    } catch {
-      window.location.href = 'https://techsrijan.org';
+      window.open('https://techsrijan.org', '_blank', 'noopener,noreferrer');
+    } catch (e) {
+      console.warn('Popup blocked by browser:', e);
     }
+
+    // Switch current tab to the premium celebration screen
+    setPhase('launched');
+    soundEngine.playLaunchImpact();
+    triggerConfettiShower();
   };
+
 
 
 
@@ -298,30 +296,9 @@ export const LaunchSequenceModal: React.FC<LaunchSequenceModalProps> = ({ isOpen
             onEnded={handleVideoEnd}
             className="w-full h-full w-screen h-screen object-cover"
           />
-
-          {/* Teleporting transition screen right at the moment of redirect */}
-          {isRedirecting && (
-            <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md px-4 text-center animate-fade-in">
-              <div className="relative flex items-center justify-center mb-5">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-orange-500/30 border-t-amber-400 animate-spin" />
-                <Rocket className="absolute w-7 h-7 text-amber-400 animate-pulse" />
-              </div>
-              <h2 className="font-cinzel text-2xl sm:text-4xl font-black text-amber-300 tracking-wider mb-2 drop-shadow-[0_0_20px_rgba(245,158,11,0.8)]">
-                TECHSRIJAN'27 IS LIVE
-              </h2>
-              <p className="font-cinzel text-xs sm:text-sm text-zinc-300 tracking-[0.25em] uppercase mb-4">
-                TELEPORTING TO OFFICIAL PORTAL...
-              </p>
-              <a
-                href="https://techsrijan.org"
-                className="text-xs text-amber-400/80 hover:text-amber-300 underline transition-colors"
-              >
-                Click here if not redirected automatically
-              </a>
-            </div>
-          )}
         </div>
       )}
+
 
       {/* =========================================================================
           PHASE 3: Premium Launched Celebration Screen (On Current Tab)
